@@ -1,4 +1,14 @@
 <!-- TaskDetail.vue -->
+<script setup>
+import { ref } from 'vue';
+import TaskForm from '../components/TaskForm.vue';
+const message = ref('This is a modal popup');
+const emit = defineEmits(['close']);
+const closeModal = () => {
+ emit('close');
+};
+</script>
+
 <template>
     <div>
       <h2>{{ task.title }}</h2>
@@ -13,7 +23,14 @@
   export default {
     data() {
       return {
-        task: {},
+        task: {
+          id: 1,
+          title: "Task 1",
+          description: "Description 1",
+          status: "open",
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
       };
     },
     created() {

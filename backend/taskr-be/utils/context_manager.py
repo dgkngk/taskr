@@ -41,11 +41,13 @@ class ContextManager:
             self._ctx_dict = before_save
             return False
         
-    def remove_task(self, task):
+    def remove_task(self, task_id):
         self.load_context()
         before_save = self._ctx_dict.copy()
         try:
-            self._ctx_dict["tasks"].remove(task)
+            for task in self._ctx_dict["tasks"]:
+                if task.title == task_id:
+                    self._ctx_dict["tasks"].remove(task)
             save_result = self._cache.save_obj_to_file(self._ctx_dict, "ctx.cache")
             if not save_result:
                 self._ctx_dict = before_save
@@ -58,7 +60,7 @@ class ContextManager:
     
     def task_exists(self, task):
         self.load_context()
-        return task in self._ctx_dict["tasks"]
+        return task in [task.title for task in self._ctx_dict["tasks"]]
     
     def get_task(self, task_id):
         self.load_context()

@@ -1,33 +1,41 @@
-<!-- TaskListView.vue -->
+<script setup>
+import TaskList from '../components/TaskList.vue';
+</script>
+
 <template>
-    <div>
-      <h2>Task List</h2>
-      <router-link to="/tasks/create">Create Task</router-link>
-      <ul class="list-group">
-        <router-link
-          v-for="task in tasks"
-          :key="task.id"
-          :to="'/tasks/' + task.id"
-          class="list-group-item"
-        >
-          {{ task.title }}
-        </router-link>
-      </ul>
-    </div>
-  </template>
+  <div class="nav bg-dark display-flex justify-content-center">
+    <TaskList :task_list="tasksList" :status="'Open'" />
+    <TaskList :task_list="tasksList" :status="'Testing'" />
+    <TaskList :task_list="tasksList" :status="'Done'" />
+  </div>
+    
+</template>
   
   <script>
-  export default {
-    data() {
-      return {
-        tasks: [
-          { id: 1, title: "Task 1", description: "Description 1", status: "open" },
-          { id: 2, title: "Task 2", description: "Description 2", status: "testing" },
-          { id: 3, title: "Task 3", description: "Description 3", status: "done" },
-        ],
-      };
+export default {
+  data() {
+    return {
+      tasksList: [],
+      timer: ''
+    }
+  },
+  created() {
+    this.getTasks();
+  },
+  beforeMount() {
+    this.getTasks();
+  },
+  methods: {
+    createTask() {
+      this.$router.push('/tasks/create');
     },
-  };
+    async getTasks() {
+      const response = await fetch('http://localhost:5000/', {mode: 'cors'});
+      const data = await response.json();
+      this.tasksList = data;
+    },
+  },
+};
   </script>
   
   <style scoped>
