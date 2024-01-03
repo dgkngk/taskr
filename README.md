@@ -4,7 +4,7 @@
 
 Create a python virtual environment
 ```sh
-python -p 3.11 -m venv venv
+python -m venv venv
 ```
 Activate and Setup Environment
 ```sh
