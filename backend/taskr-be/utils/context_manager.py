@@ -1,5 +1,5 @@
 from utils.cache_util import CacheHelper
-from utils import taskr_logger
+from utils.logger_util import taskr_logger
 
 class ContextManager:
     def __init__(self):
@@ -11,9 +11,11 @@ class ContextManager:
     
     def load_context(self):
         try:
-            self._ctx_dict = self._cache.read_cache_file("ctx.cache")
-            if not self._ctx_dict:
+            loaded = self._cache.read_cache_file("ctx.cache")
+            if loaded is None:
                 self._ctx_dict = {"tasks": []}
+            else:
+                self._ctx_dict = loaded
             return True
         except Exception as e:
             taskr_logger.exception("Could not load context, setting empty context")

@@ -53,3 +53,6 @@ class FRLogger(object):
 
     def info(self, msg: str):
         return self.__logger.info(msg)
+
+
+taskr_logger = FRLogger("TaskrApp", "WARN")

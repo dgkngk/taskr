@@ -16,10 +16,14 @@ class TaskModel:
         }
     
     def set_with_dict(self, task_as_dict):
-        self.title = task_as_dict["title"]
-        self.description = task_as_dict["description"]
-        self.status = Status(task_as_dict["status"])
-        self.active = task_as_dict["active"]
+        try:
+            self.title = task_as_dict["title"]
+            self.description = task_as_dict["description"]
+            self.status = Status(task_as_dict["status"])
+            self.active = task_as_dict["active"]
+            return True
+        except Exception as e:
+            return False
     
     def __eq__(self, __value: object) -> bool:
         return self.as_dict() == __value

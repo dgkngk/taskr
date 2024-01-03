@@ -1,5 +1,6 @@
-from .logger_util import FRLogger
+from .logger_util import taskr_logger
+from .context_manager import ContextManager
 
-taskr_logger = FRLogger("TaskrApp", "WARN")
+ctx = ContextManager()
 
-__all__ = ["taskr_logger"]
+__all__ = ["taskr_logger", "ctx"]
